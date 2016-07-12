@@ -12,7 +12,7 @@ provisioner:
 
 platforms:
   - name: ubuntu-14.04
-  # - name: centos-7.1
+  - name: centos-6.6
   # - name: freebsd-10.2
 
 suites:
@@ -20,3 +20,5 @@ suites:
     run_list:
       - recipe[b-goapp::default]
     attributes:
+      b-goapp:
+        bin: "https://s3-eu-west-1.amazonaws.com/my-habitat/goapp/web"

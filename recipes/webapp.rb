@@ -18,13 +18,26 @@ directory "/opt/webapp/latest" do
   action :create
 end
 
-# Create init
-cookbook_file '/etc/init/webapp.conf' do
-  source 'init/webapp.conf'
-  owner 'root'
-  group 'root'
-  mode '0644'
-  action :create
+if platform_family?('rhel')
+  # Create init
+  cookbook_file '/etc/init.d/webapp' do
+    source 'init/rhel-webapp-init'
+    owner 'root'
+    group 'root'
+    mode '0755'
+    action :create
+  end
+end
+
+if platform_family?('debian')
+  # Create init
+  cookbook_file '/etc/init/webapp.conf' do
+    source 'init/deb-webapp.conf'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    action :create
+  end
 end
 
 # Set service
@@ -34,16 +47,7 @@ service "webapp" do
 end
 
 # Create bin and start / restart webapp
-# cookbook_file '/opt/webapp/latest/web' do
-#   source 'bin/web'
-#   owner 'webapp'
-#   group 'webapp'
-#   mode '0755'
-#   action :create
-#   notifies :restart, "service[webapp]"
-# end
-
-remote_file '/opt/webapp/latest/web' do
+remote_file '/opt/webapp/latest/webapp' do
   source node['b-goapp']['bin']
   owner 'webapp'
   group 'webapp'
