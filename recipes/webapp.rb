@@ -46,12 +46,12 @@ service "webapp" do
   action [ :enable ]
 end
 
-# Create bin and start / restart webapp
-remote_file '/opt/webapp/latest/webapp' do
-  source node['b-goapp']['bin']
-  owner 'webapp'
-  group 'webapp'
-  mode '0755'
-  action :create
-  notifies :restart, "service[webapp]"
-end
+# # Create bin and start / restart webapp
+# remote_file '/opt/webapp/latest/webapp' do
+#   source node['b-goapp']['bin']
+#   owner 'webapp'
+#   group 'webapp'
+#   mode '0755'
+#   action :create
+#   notifies :restart, "service[webapp]"
+# end
