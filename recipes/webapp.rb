@@ -4,15 +4,15 @@
 #
 
 # Webapp user
-user 'webapp' do
+user node['b-goapp']['webapp']['user'] do
   comment 'User to run webapp'
   shell '/bin/bash'
 end
 
 # Create directories
 directory "/opt/webapp/latest" do
-  owner "webapp"
-  group "webapp"
+  owner node['b-goapp']['webapp']['user']
+  group node['b-goapp']['webapp']['group']
   mode 00755
   recursive true
   action :create
