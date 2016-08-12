@@ -20,23 +20,29 @@ end
 
 if platform_family?('rhel')
   # Create init
-  cookbook_file '/etc/init.d/webapp' do
-    source 'init/rhel-webapp-init'
+  template "/etc/init.d/webapp" do
+    source 'etc/init/rhel-webapp-init.erb'
+    mode 0644
     owner 'root'
     group 'root'
-    mode '0755'
-    action :create
+    variables(
+    :user => node['b-goapp']['webapp']['user'],
+    :group => node['b-goapp']['webapp']['group']
+    )
   end
 end
 
 if platform_family?('debian')
   # Create init
-  cookbook_file '/etc/init/webapp.conf' do
-    source 'init/deb-webapp.conf'
+  template "/etc/init/webapp.conf" do
+    source 'etc/init/deb-webapp.conf.erb'
+    mode 0644
     owner 'root'
     group 'root'
-    mode '0644'
-    action :create
+    variables(
+    :user => node['b-goapp']['webapp']['user'],
+    :group => node['b-goapp']['webapp']['group']
+    )
   end
 end
 
