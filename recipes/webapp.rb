@@ -13,7 +13,7 @@ end
 directory "/opt/webapp/latest" do
   owner node['b-goapp']['webapp']['user']
   group node['b-goapp']['webapp']['group']
-  mode 00755
+  mode 00777
   recursive true
   action :create
 end
